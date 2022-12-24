@@ -38,8 +38,8 @@ function Branch({ keyIndex = 0 }) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                MaDoiTac: data.MaDoiTac,
-                MaChiNhanh: data.MaChiNhanh,
+                MaDoiTac: data[0].MaDoiTac,
+                MaChiNhanh: data[0].MaChiNhanh,
                 ThoiGianMoCua: OpenTime,
             }),
         });

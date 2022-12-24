@@ -48,11 +48,10 @@ function Item({ children, data = {}, keyIndex = 0 }) {
             },
             body: JSON.stringify({
                 MaMonAn: data.MaMonAn,
-                Gia: Price
-            })
-        })
-        console.log(data.MaMonAn);
-    }
+                Gia: Price,
+            }),
+        });
+    };
     const handleOnClickSaleOff = () => {
         fetch(`http://localhost:5000/branch/saleoff/${data.MaMonAn}`, {
             method: 'POST',
@@ -95,7 +94,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
                         <div className={cx('group-row')}>
                             <Text>{data && typeof data.Gia !== 'object' && format(data.Gia)}</Text>
                             <div className={cx('btn')}>
-                                <Button className={cx('remove')} onClick={() => handleOnClickDelete}>
+                                <Button className={cx('remove')} onClick={() => handleOnClickDelete()}>
                                     Xóa
                                 </Button>
                                 <Button data-toggle="modal" data-target={`#view${keyIndex}`}>
@@ -217,7 +216,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
                                                 className={cx('btn-modal')}
                                                 data-dismiss="modal"
                                                 aria-label="Close"
-                                                onClick={() => handleOnClickUpdateName}
+                                                onClick={() => handleOnClickUpdateName()}
                                             >
                                                 <div>Cập nhật tên món</div>
                                             </div>
@@ -255,7 +254,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
                                                 className={cx('btn-modal')}
                                                 data-dismiss="modal"
                                                 aria-label="Close"
-                                                onClick={() => handleOnClickSaleOff}
+                                                onClick={() => handleOnClickSaleOff()}
                                             >
                                                 <div>Áp dụng khuyến mãi</div>
                                             </div>
