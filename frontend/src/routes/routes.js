@@ -15,8 +15,12 @@ import ManageDriverPage from '~/pages/ManageDriver';
 import EarningTrackingPage from '~/pages/EarningTracking';
 import ManageCoopPage from '~/pages/ManageCoop';
 import LoginPage from '~/pages/Login';
+<<<<<<< Updated upstream
 import ListCoopPage from '~/pages/ListCoop';
 import ManageDataPage from '~/pages/ManageData';
+=======
+import StatisticsPage from '~/pages/Statistics';
+>>>>>>> Stashed changes
 
 const publicRoutes = [
     { path: config.routes.home, components: Home },
@@ -34,6 +38,7 @@ const publicRoutes = [
     { path: config.routes.manageData, components: ManageDataPage },
     { path: config.routes.listCoop, components: ListCoopPage },
     { path: config.routes.login, components: LoginPage },
+    { path: config.routes.statistics, components: StatisticsPage },
 ];
 const privateRoutes = [];
 
