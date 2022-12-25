@@ -12,7 +12,11 @@ const followOrderRouter = require("./FollowOrder");
 const earningTrackingRouter = require("./EarningTracking");
 const manageCoopRouter = require("./ManageCoop");
 const loginRouter = require("./Login");
+<<<<<<< Updated upstream
 const ListCoopRouter = require("./ListCoop");
+=======
+const statisticsRouter = require("./Statistics");
+>>>>>>> Stashed changes
 
 function route(app) {
 	app.use("/register", registerRouter);
@@ -30,6 +34,7 @@ function route(app) {
 	app.use("/restaurant", restaurantRouter);
 	app.use("/restaurants", restaurantsRouter);
 	app.use("/home", homeRouter);
+	app.use("/statistics", statisticsRouter);
 }
 
 module.exports = route;
