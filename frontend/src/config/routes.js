@@ -14,6 +14,7 @@ const routes = {
     manageCoop: '/manage-coop',
     listCoop: '/list-coop',
     login: '/login',
+    statistics: '/statistics/:id',
 };
 
 export default routes;
