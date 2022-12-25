@@ -150,7 +150,17 @@ td.more {
         margin-right: 32px;
         cursor: pointer;
     }
-    .link{
+    .link {
+        color: var(--primary-color);
+        text-decoration: underline;
+    }
+}
+.btn-sort {
+    background-color: transparent;
+    border: none;
+    margin-left: 8px;
+    color: #000;
+    &.active {
         color: var(--primary-color);
         text-decoration: underline;
     }

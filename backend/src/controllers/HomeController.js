@@ -38,7 +38,7 @@ class HomeController {
           conn
             .request()
             .query(
-              `SELECT TOP 1 DT.MaDoiTac, Dt.TenDoiTac, DT.LoaiAmThuc,TD.Rating, CN.ThoiGianDoiTen
+              `SELECT TOP 8 DT.MaDoiTac, Dt.TenDoiTac, DT.LoaiAmThuc,TD.Rating, CN.ThoiGianDoiTen
 							FROM dbo.DOITAC DT, dbo.THUCDON TD, dbo.CHINHANH CN
 							where DT.MaDoiTac = TD.MaDoiTac and CN.MaDoiTac = DT.MaDoiTac`
             )

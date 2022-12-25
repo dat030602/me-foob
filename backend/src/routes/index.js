@@ -7,6 +7,7 @@ const contactRouter = require("./Contact");
 const branchRouter = require("./Branch");
 const manageCartRouter = require("./ManageCart");
 const manageDriverRouter = require("./ManageDriver");
+const manageDataRouter = require("./ManageData");
 const followOrderRouter = require("./FollowOrder");
 const earningTrackingRouter = require("./EarningTracking");
 const manageCoopRouter = require("./ManageCoop");
@@ -22,6 +23,7 @@ function route(app) {
 	app.use("/branch", branchRouter);
 	app.use("/manage-cart", manageCartRouter);
 	app.use("/manage-driver", manageDriverRouter);
+	app.use("/manage-data", manageDataRouter);
 	app.use("/follow-order", followOrderRouter);
 	app.use("/earning-tracking", earningTrackingRouter);
 	app.use("/manage-coop", manageCoopRouter);
