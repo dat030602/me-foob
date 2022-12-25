@@ -19,16 +19,26 @@ function Branch({ keyIndex = 0 }) {
     const [Status, setStatus] = useState('');
     //const [name, setName] = useState();
     const handleOnClickUpdateStoreName = () => {
-        fetch(`http://localhost:5000/branch/updateName/${data.TenChiNhanh}`, {
-            method: 'PUT',
+        fetch(`http://localhost:5000/branch/updateStoreName`, {
+            method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                MaChiNhanh: data.MaChiNhanh,
+                MaDoiTac: data[0].MaDoiTac,
+                MaChiNhanh: data[0].MaChiNhanh,
                 Ten: Name,
             }),
-        });
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                if (data.returnValue == 2 && data.returnValue != undefined) {
+                    alert('Cửa hàng không thể cập nhật tên trong 30 ngày');
+                }
+            });
     };
     const handleOnClickUpdateStoreOpenTime = () => {
         fetch(`http://localhost:5000/branch/updateStoreOpenTime`, {
@@ -45,25 +55,29 @@ function Branch({ keyIndex = 0 }) {
         });
     };
     const handleOnClickUpdateStoreCloseTime = () => {
-        fetch(`http://localhost:5000/branch/updateName/${data.ThoiGianDongCua}`, {
-            method: 'PUT',
+        fetch(`http://localhost:5000/branch/updateStoreCloseTime`, {
+            method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                MaChiNhanh: data.MaChiNhanh,
+                MaDoiTac: data[0].MaDoiTac,
+                MaChiNhanh: data[0].MaChiNhanh,
                 ThoiGianDongCua: CloseTime,
             }),
         });
     };
     const handleOnClickUpdateStoreStatus = () => {
-        fetch(`http://localhost:5000/branch/updateName/${data.TinhTrangChiNhanh}`, {
-            method: 'PUT',
+        fetch(`http://localhost:5000/branch/updateStoreStatus`, {
+            method: 'POST',
             headers: {
+                Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                MaChiNhanh: data.MaChiNhanh,
+                MaDoiTac: data[0].MaDoiTac,
+                MaChiNhanh: data[0].MaChiNhanh,
                 TinhTrangChiNhanh: Status,
             }),
         });
@@ -161,9 +175,9 @@ function Branch({ keyIndex = 0 }) {
                                                 className={cx('btn-modal')}
                                                 data-dismiss="modal"
                                                 aria-label="Close"
-                                                onClick={() => handleOnClickUpdateStoreName}
+                                                onClick={() => handleOnClickUpdateStoreName()}
                                             >
-                                                <div>Cập nhật tên quán</div>
+                                                <div>Cập nhật tên cửa hàng</div>
                                             </div>
                                             <div className={cx('text-input')}>
                                                 <Text className={cx('text')}>Thời gian mở cửa</Text>
@@ -199,7 +213,7 @@ function Branch({ keyIndex = 0 }) {
                                                 className={cx('btn-modal')}
                                                 data-dismiss="modal"
                                                 aria-label="Close"
-                                                onClick={() => handleOnClickUpdateStoreCloseTime}
+                                                onClick={() => handleOnClickUpdateStoreCloseTime()}
                                             >
                                                 <div>Cập nhật thời gian đóng cửa</div>
                                             </div>
@@ -208,7 +222,7 @@ function Branch({ keyIndex = 0 }) {
                                                 <input
                                                     type="text"
                                                     value={Status}
-                                                    name="name"
+                                                    name="status"
                                                     onChange={(e) => {
                                                         setStatus(e.target.value);
                                                     }}
@@ -218,7 +232,7 @@ function Branch({ keyIndex = 0 }) {
                                                 className={cx('btn-modal')}
                                                 data-dismiss="modal"
                                                 aria-label="Close"
-                                                onClick={() => handleOnClickUpdateStoreStatus}
+                                                onClick={() => handleOnClickUpdateStoreStatus()}
                                             >
                                                 <div>Cập nhật tình trạng cửa hàng</div>
                                             </div>
