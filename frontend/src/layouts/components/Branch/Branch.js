@@ -1,12 +1,12 @@
 import styles from './Branch.module.scss';
 import Button from '~/components/Button';
 import classNames from 'classnames/bind';
-import ProductCoop from '~/components/Popper/ProductCoop';
 import Text from '~/components/Text';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Star from '~/components/Star';
 import ErrorPage from '../ErrorPage';
+import { ProductCoop } from '~/components/Popper';
 
 const cx = classNames.bind(styles);
 
