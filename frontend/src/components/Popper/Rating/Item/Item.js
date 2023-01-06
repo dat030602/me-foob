@@ -7,9 +7,9 @@ import Star from '~/components/Star';
 
 const cx = classNames.bind(styles);
 
-function Item({ children, data = {}, key }) {
+function Item({ children, data = {}, }) {
     return (
-        <div className={cx('item')} key={key}>
+        <div className={cx('item')}>
             <h1 className={cx('name')}>
                 <Text>Tên món ăn: {data.TenMonAn}</Text>
             </h1>

@@ -38,6 +38,7 @@ function Item({ children, data = {}, order = false }) {
         });
     }
     const handleOnClickAdd = () => {
+        console.log(data.TinhTrangMon)
         if (data.TinhTrangMon === 'Bình thường') {
             setAmount(amount + 1);
             if (product.sl === 0) setProduct({ ma: data.MaMonAn, ten: data.TenMonAn, gia: data.Gia, sl: amount + 1 });

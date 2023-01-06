@@ -12,11 +12,8 @@ const followOrderRouter = require("./FollowOrder");
 const earningTrackingRouter = require("./EarningTracking");
 const manageCoopRouter = require("./ManageCoop");
 const loginRouter = require("./Login");
-<<<<<<< Updated upstream
-const ListCoopRouter = require("./ListCoop");
-=======
 const statisticsRouter = require("./Statistics");
->>>>>>> Stashed changes
+const ListCoopRouter = require("./ListCoop");
 
 function route(app) {
 	app.use("/register", registerRouter);

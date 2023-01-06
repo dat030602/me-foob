@@ -67,7 +67,7 @@ class RestaurantController {
 					conn
 						.request()
 						.input("MaTD", sql.VarChar(10), req.params.slug)
-						.execute("dbo.SP_XEM_MON")
+						.execute("dbo.Xem_Thuc_Don")
 						.then((v) => {
 							result = v;
 						})

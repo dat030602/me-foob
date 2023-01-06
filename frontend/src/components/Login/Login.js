@@ -151,6 +151,19 @@ function Login({ children, login = false, name = '', ...props }) {
                                     </li>
                                 )
                             }
+                            {
+                                // eslint-disable-next-line eqeqeq
+                                localStorage.getItem('roll') == 3 && (
+                                    <li className={cx('item')}>
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/statistics/${localStorage.getItem('ma')}`}
+                                        >
+                                            Xem danh sách tất cả đơn hàng (đối tác)
+                                        </Button>
+                                    </li>
+                                )
+                            }
                             <li className={cx('item')}>
                                 <Button className={cx('item-link')} onClick={() => handleLogout()}>
                                     Đăng xuất
