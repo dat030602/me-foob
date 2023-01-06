@@ -25,9 +25,7 @@ function Contact() {
     }
 
     useEffect(() => {
-        if (
-            (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3)
-        ) {
+        if (localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) {
             const abortController = new AbortController();
             fetch(`http://localhost:5000/contact/getBranch/${id}`, {
                 method: 'GET',
@@ -127,8 +125,7 @@ function Contact() {
 
     return (
         <>
-            {(localStorage.getItem('roll') == 1 ||
-                localStorage.getItem('roll') == 3) && (
+            {(localStorage.getItem('roll') == 1 || localStorage.getItem('roll') == 3) && (
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('title')}>
@@ -235,7 +232,26 @@ function Contact() {
                         </div>
                         <div className={cx('btn-submit')}>
                             {localStorage.getItem('roll') == 1 && (
-                                <Button className={cx('btn')} style={{ backgroundColor: 'red' }}>
+                                <Button
+                                    className={cx('btn')}
+                                    style={{ backgroundColor: 'red' }}
+                                    onClick={() => {
+                                        fetch(`http://localhost:5000/contact/deleteContract/${data[0].MaHopDong}`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                Accept: 'application/json',
+                                            },
+                                        })
+                                            .then((res) => {
+                                                return res.json();
+                                            })
+                                            .then((data) => {
+                                                alert('Thành công')
+                                                window.location.href='/list-coop'
+                                            });
+                                    }}
+                                >
                                     Hủy
                                 </Button>
                             )}
@@ -277,8 +293,7 @@ function Contact() {
                     </div>
                 </>
             )}
-            {(localStorage.getItem('roll') != 1 ||
-                localStorage.getItem('roll') != 3 ) && <ErrorPage />}
+            {(localStorage.getItem('roll') != 1 || localStorage.getItem('roll') != 3) && <ErrorPage />}
         </>
     );
 }

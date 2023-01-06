@@ -94,7 +94,7 @@ function ManageCart() {
                                             {Object.keys(data).map(function (key) {
                                                 return (
                                                     <tr key={key} value={data[key]}>
-                                                        <td>{key + 1}</td>
+                                                        <td>{parseInt(key) + 1}</td>
                                                         <td>{data[key].MaPhieuDatHang}</td>
                                                         <td>{`${data[key].dc}`}</td>
                                                         <td>{format(data[key].TongHoaDon)}</td>

@@ -142,7 +142,10 @@ function Login({ children, login = false, name = '', ...props }) {
                                 // eslint-disable-next-line eqeqeq
                                 localStorage.getItem('roll') == 3 && (
                                     <li className={cx('item')}>
-                                        <Button className={cx('item-link')} to="/manage-data">
+                                        <Button
+                                            className={cx('item-link')}
+                                            to={`/manage-data/${localStorage.getItem('ma')}`}
+                                        >
                                             Quản lý doanh thu (đối tác)
                                         </Button>
                                     </li>

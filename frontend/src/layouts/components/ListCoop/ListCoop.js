@@ -12,7 +12,6 @@ const cx = classNames.bind(styles);
 
 function ListCoop() {
     const [data, setData] = useState();
-    const [data1, setData1] = useState();
     function convertDate(day) {
         var date = day.slice(0, 10);
         date = date.split('-');
@@ -39,7 +38,7 @@ function ListCoop() {
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('title')}>
-                            <h1>Quản lý đơn đặt hàng</h1>
+                            <h1>Quản lý đối tác</h1>
                         </div>
                         <div className={cx('content')}>
                             <div className={cx('content-wrapper')}>
@@ -83,6 +82,26 @@ function ListCoop() {
                                     />
                                     <label for="choice2">Đã ký hợp đồng</label>
                                 </div>
+                                <div>
+                                    <input
+                                        id="choice3"
+                                        type="radio"
+                                        name="select"
+                                        onClick={() => {
+                                            fetch(`http://localhost:5000/list-coop/getDeadline`, {
+                                                method: 'GET',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then((res) => {
+                                                    return res.json();
+                                                })
+                                                .then((data) => setData(data));
+                                        }}
+                                    />
+                                    <label for="choice3">Sắp hết hạn</label>
+                                </div>
                             </div>
                             <div className={cx('content-wrapper')}>
                                 <table>
@@ -97,7 +116,7 @@ function ListCoop() {
                                         Object.keys(data).map(function (key) {
                                             return (
                                                 <tr key={key} value={data[key]}>
-                                                    <td>{key + 1}</td>
+                                                    <td>{parseInt(key) + 1}</td>
                                                     <td>{data[key].MaHopDong}</td>
                                                     <td>{`${data[key].MaDoiTac}`}</td>
                                                     <td>

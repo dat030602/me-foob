@@ -130,6 +130,32 @@ class ContactController {
 			res.json(ress);
 		});
 	}
+	deleteContract(req, res) {
+		const func = async () => {
+			try {
+				let result;
+				await sql.connect(config.config).then((conn) =>
+					conn
+						.request()
+						.query(
+							`declare @MaDoiTac varchar(10)=(select MaDoiTac from dbo.HOPDONG where MaHopDong='${req.params.slug}')
+							delete dbo.HOPDONG where MaDoiTac=@MaDoiTac;
+							`
+						)
+						.then((v) => {
+							result = v;
+						})
+						.then(() => conn.close())
+				);
+				return result;
+			} catch (error) {
+				console.log(`Error: ${error}`);
+			}
+		};
+		func().then((ress) => {
+			res.json(ress);
+		});
+	}
 }
 
 module.exports = new ContactController();

@@ -4,6 +4,7 @@ import styles from './ManageData.module.scss';
 import classNames from 'classnames/bind';
 import ErrorPage from '../ErrorPage';
 import EmptyPage from '../EmptyPage';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -16,18 +17,22 @@ function ManageData() {
         });
     }
     function convertDate(day) {
-        var date = day.slice(0, 10);
-        date = date.split('-');
-        return date;
+        if (typeof day != 'number') {
+            var date = day.slice(0, 10);
+            date = date.split('-');
+            return `${date[2]}/${date[1]}/${date[0]}`;
+        }
+        return day;
     }
 
     const [data1, setData1] = useState({});
     const [data2, setData2] = useState({});
     const [data3, setData3] = useState({});
 
+
     useEffect(() => {
         if (localStorage.getItem('roll') == 1)
-            fetch(`http://localhost:5000/manage-coop/get1`, {
+            fetch(`http://localhost:5000/manage-data/get1`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,11 +56,13 @@ function ManageData() {
             if (indexSub === index) refLink.current[indexSub].style.display = 'block';
             else refLink.current[indexSub].style.display = 'none';
         });
-        fetch(`http://localhost:5000/manage-coop/get${index + 1}`, {
-            method: 'GET',
+        fetch(`http://localhost:5000/manage-data/get${index + 1}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Accept: 'application/json',
             },
+            body: JSON.stringify({ ma: localStorage.getItem('ma'), status: 0 }),
         })
             .then((res) => {
                 return res.json();
@@ -64,6 +71,22 @@ function ManageData() {
                 if (index === 0) setData1(data);
                 else if (index === 1) setData2(data);
                 else if (index === 2) setData3(data);
+            });
+    };
+    const handleOnChangeSort = (e) => {
+        fetch(`http://localhost:5000/manage-data/get2`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+            body: JSON.stringify({ ma: localStorage.getItem('ma'), status: e.target.value }),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setData2(data);
             });
     };
     // eslint-disable-next-line no-const-assign
@@ -88,6 +111,32 @@ function ManageData() {
                     <div className={cx('container', 'grid')} ref={pushRefLink}>
                         <div className={cx('title')}>
                             <h1>Thống kê số lượng đơn hàng</h1>
+                            <select
+                                onChange={(e) => {
+                                    fetch(`http://localhost:5000/manage-data/get1`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Accept: 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            ma: localStorage.getItem('ma'),
+                                            status: e.target.value,
+                                        }),
+                                    })
+                                        .then((res) => {
+                                            return res.json();
+                                        })
+                                        .then((data) => {
+                                            setData1(data);
+                                        });
+                                }}
+                            >
+                                <option value={0}>Tất cả</option>
+                                <option value={1}>Theo năm</option>
+                                <option value={2}>Theo tháng</option>
+                                <option value={3}>Theo ngày</option>
+                            </select>
                         </div>
                         {data1 !== undefined && data1.length !== 0 && (
                             <div className={cx('content')}>
@@ -103,8 +152,8 @@ function ManageData() {
                                                 return (
                                                     <tr key={key} value={data1[key]}>
                                                         <td>{parseInt(key) + 1}</td>
-                                                        <td>{data1[key].TenDoiTac}</td>
-                                                        <td>{format(data1[key].slcn)}</td>
+                                                        <td>{convertDate(data1[key].NgayGiaoHang)}</td>
+                                                        <td>{format(data1[key].SoLuongDonHang)}</td>
                                                     </tr>
                                                 );
                                             })}
@@ -124,18 +173,21 @@ function ManageData() {
                                         <tr>
                                             <th>STT</th>
                                             <th>Tên món ăn</th>
-                                            <th>Đánh giá</th>
-                                            <th>Số lượng bán ra</th>
-                                            <th>Bình luận</th>
+                                            <th>
+                                                Số lượng bán ra
+                                                <select onChange={(e) => handleOnChangeSort(e)}>
+                                                    <option value={0}>Lớn nhất</option>
+                                                    <option value={1}>Nhỏ nhất</option>
+                                                </select>
+                                            </th>
                                         </tr>
                                         {data2 !== undefined &&
                                             Object.keys(data2).map(function (key) {
                                                 return (
                                                     <tr key={key} value={data2[key]}>
                                                         <td>{parseInt(key) + 1}</td>
-                                                        <td>{data2[key].MaDoiTac}</td>
-                                                        <td>{data2[key].TenDoiTac}</td>
-                                                        <td>{format(data2[key].slkh)}</td>
+                                                        <td>{data2[key].TenMonAn}</td>
+                                                        <td>{format(data2[key].SoLuong)}</td>
                                                     </tr>
                                                 );
                                             })}
@@ -147,6 +199,32 @@ function ManageData() {
                     <div className={cx('container', 'grid')} ref={pushRefLink}>
                         <div className={cx('title')}>
                             <h1>Tổng doanh thu</h1>
+                            <select
+                                onChange={(e) => {
+                                    fetch(`http://localhost:5000/manage-data/get3`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Accept: 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            ma: localStorage.getItem('ma'),
+                                            status: e.target.value,
+                                        }),
+                                    })
+                                        .then((res) => {
+                                            return res.json();
+                                        })
+                                        .then((data) => {
+                                            setData3(data);
+                                        });
+                                }}
+                            >
+                                <option value={0}>Tất cả</option>
+                                <option value={1}>Theo năm</option>
+                                <option value={2}>Theo tháng</option>
+                                <option value={3}>Theo ngày</option>
+                            </select>
                         </div>
                         {data3 !== undefined && data3.length !== 0 && (
                             <div className={cx('content')}>
@@ -162,8 +240,8 @@ function ManageData() {
                                                 return (
                                                     <tr key={key} value={data3[key]}>
                                                         <td>{parseInt(key) + 1}</td>
-                                                        <td>{data3[key].TenDoiTac}</td>
-                                                        <td>{format(data3[key].doanhso)}</td>
+                                                        <td>{convertDate(data3[key].NgayGiaoHang)}</td>
+                                                        <td>{format(data3[key].TongHoaDon)}</td>
                                                     </tr>
                                                 );
                                             })}

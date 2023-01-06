@@ -11,14 +11,18 @@ function ManageCoop() {
     const refLink = useRef([]);
 
     function format(n) {
-        return n.toFixed(0).replace(/./g, function (c, i, a) {
-            return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
-        });
+        if (n != undefined)
+            return n.toFixed(0).replace(/./g, function (c, i, a) {
+                return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
+            });
     }
     function convertDate(day) {
-        var date = day.slice(0, 10);
-        date = date.split('-');
-        return date;
+        if (typeof day == 'string') {
+            var date = day.slice(0, 10);
+            date = date.split('-');
+            return `${date[2]}/${date[1]}/${date[0]}`;
+        }
+        return day;
     }
 
     const [data1, setData1] = useState({});
@@ -31,10 +35,13 @@ function ManageCoop() {
     useEffect(() => {
         if (localStorage.getItem('roll') == 1)
             fetch(`http://localhost:5000/manage-coop/get1`, {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({
+                    status: 0,
+                }),
             })
                 .then((res) => {
                     return res.json();
@@ -55,10 +62,13 @@ function ManageCoop() {
             else refLink.current[indexSub].style.display = 'none';
         });
         fetch(`http://localhost:5000/manage-coop/get${index + 1}`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                status: 0,
+            }),
         })
             .then((res) => {
                 return res.json();
@@ -70,6 +80,7 @@ function ManageCoop() {
                 else if (index === 3) setData4(data);
                 else if (index === 4) setData5(data);
                 else setData6(data);
+                console.log(data);
             });
     };
     // eslint-disable-next-line no-const-assign
@@ -119,14 +130,7 @@ function ManageCoop() {
                                                         <td>{format(data1[key].slcn)}</td>
                                                         <td>{format(data1[key].doanhso)}</td>
                                                         <td>{format(data1[key].hoahong)}</td>
-                                                        <td>
-                                                            {convertDate(data1[key].NgayHetHan)
-                                                                .reverse()
-                                                                .map((value, index) => {
-                                                                    if (index === 2) return value;
-                                                                    return value + '/';
-                                                                })}
-                                                        </td>
+                                                        <td>{convertDate(data1[key].NgayHetHan)}</td>
                                                     </tr>
                                                 );
                                             })}
@@ -138,6 +142,30 @@ function ManageCoop() {
                     <div className={cx('container', 'grid')} ref={pushRefLink}>
                         <div className={cx('title')}>
                             <h1>Thống kê lượng khách hàng</h1>
+                            <select
+                                onChange={(e) => {
+                                    fetch(`http://localhost:5000/manage-coop/get2`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Accept: 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            status: e.target.value,
+                                        }),
+                                    })
+                                        .then((res) => {
+                                            return res.json();
+                                        })
+                                        .then((data) => {
+                                            setData2(data);
+                                        });
+                                }}
+                            >
+                                <option value={0}>Theo năm</option>
+                                <option value={1}>Theo tháng</option>
+                                <option value={2}>Theo ngày</option>
+                            </select>
                         </div>
                         {data2 !== undefined && data2.length !== 0 && (
                             <div className={cx('content')}>
@@ -145,6 +173,7 @@ function ManageCoop() {
                                     <table>
                                         <tr>
                                             <th>STT</th>
+                                            <th>Thời gian</th>
                                             <th>Mã đối tác</th>
                                             <th>Tên đối tác</th>
                                             <th>Số lượng khách hàng</th>
@@ -154,6 +183,7 @@ function ManageCoop() {
                                                 return (
                                                     <tr key={key} value={data2[key]}>
                                                         <td>{parseInt(key) + 1}</td>
+                                                        <td>{convertDate(data2[key].NgayGiaoHang)}</td>
                                                         <td>{data2[key].MaDoiTac}</td>
                                                         <td>{data2[key].TenDoiTac}</td>
                                                         <td>{format(data2[key].slkh)}</td>
@@ -232,6 +262,30 @@ function ManageCoop() {
                     <div className={cx('container', 'grid')} ref={pushRefLink}>
                         <div className={cx('title')}>
                             <h1>Thống kê tổng hoa hồng</h1>
+                            <select
+                                onChange={(e) => {
+                                    fetch(`http://localhost:5000/manage-coop/get5`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            Accept: 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            status: e.target.value,
+                                        }),
+                                    })
+                                        .then((res) => {
+                                            return res.json();
+                                        })
+                                        .then((data) => {
+                                            setData5(data);
+                                        });
+                                }}
+                            >
+                                <option value={0}>Theo năm</option>
+                                <option value={1}>Theo tháng</option>
+                                <option value={2}>Theo ngày</option>
+                            </select>
                         </div>
                         {data5 !== undefined && data5.length !== 0 && (
                             <div className={cx('content')}>
@@ -239,8 +293,7 @@ function ManageCoop() {
                                     <table>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Mã đối tác</th>
-                                            <th>Tên đối tác</th>
+                                            <th>Thời gian</th>
                                             <th>Tổng hoa hồng</th>
                                         </tr>
                                         {data5 !== undefined &&
@@ -248,9 +301,12 @@ function ManageCoop() {
                                                 return (
                                                     <tr key={key} value={data5[key]}>
                                                         <td>{parseInt(key) + 1}</td>
-                                                        <td>{data5[key].MaDoiTac}</td>
-                                                        <td>{data5[key].TenDoiTac}</td>
-                                                        <td>{format(data5[key].doanhso)}</td>
+                                                        <td>
+                                                            {data5[key].Ngay !== undefined && `${data5[key].Ngay}/`}
+                                                            {data5[key].Thang !== undefined && `${data5[key].Thang}/`}
+                                                            {data5[key].Nam !== undefined && data5[key].Nam}
+                                                        </td>
+                                                        <td>{format(data5[key].TongHoaDon)}</td>
                                                     </tr>
                                                 );
                                             })}
