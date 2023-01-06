@@ -66,8 +66,8 @@ class RestaurantController {
 				await sql.connect(config.config).then((conn) =>
 					conn
 						.request()
-						.input("MaTD", sql.VarChar(10), req.params.slug)
-						.execute("dbo.Xem_Thuc_Don")
+						.input("MaThucDon", sql.VarChar(10), req.params.slug)
+						.execute("dbo.SP_XEM_MON")
 						.then((v) => {
 							result = v;
 						})
