@@ -95,7 +95,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
                         <div className={cx('group-row')}>
                             <Text>{data && typeof data.Gia !== 'object' && format(data.Gia)}</Text>
                             <div className={cx('btn')}>
-                                <Button className={cx('remove')} onClick={() => handleOnClickDelete}>
+                                <Button className={cx('remove')} onClick={handleOnClickDelete}>
                                     Xóa
                                 </Button>
                                 <Button data-toggle="modal" data-target={`#view${keyIndex}`}>
