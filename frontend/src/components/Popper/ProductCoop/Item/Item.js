@@ -70,7 +70,7 @@ function Item({ children, data = {}, keyIndex = 0 }) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                MaTD: data.MaMonAn,
+                MaTD: data.MaThucDon,
                 Ten: Name,
             }),
         });
