@@ -293,7 +293,7 @@ function Contact() {
                     </div>
                 </>
             )}
-            {(localStorage.getItem('roll') != 1 || localStorage.getItem('roll') != 3) && <ErrorPage />}
+            {!(localStorage.getItem('roll') != 1 || localStorage.getItem('roll') != 3) && <ErrorPage />}
         </>
     );
 }
