@@ -186,8 +186,8 @@ function ManageData() {
                                                 return (
                                                     <tr key={key} value={data2[key]}>
                                                         <td>{parseInt(key) + 1}</td>
-                                                        <td>{data2[key].TenMonAn}</td>
-                                                        <td>{format(data2[key].SoLuong)}</td>
+                                                        <td>{data2[key].TenMonAn!==null &&data2[key].TenMonAn}</td>
+                                                        <td>{data2[key].SoLuong!==null &&format(data2[key].SoLuong)}</td>
                                                     </tr>
                                                 );
                                             })}

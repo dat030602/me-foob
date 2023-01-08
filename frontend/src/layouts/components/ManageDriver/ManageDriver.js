@@ -68,7 +68,7 @@ function ManageDriver() {
     };
     return (
         <>
-            {localStorage.getItem('roll') == 3 && (
+            {localStorage.getItem('roll') == 2 && (
                 <>
                     <div className={cx('container', 'grid')}>
                         <div className={cx('title')}>
@@ -237,7 +237,7 @@ function ManageDriver() {
                     )}
                 </>
             )}
-            {!(localStorage.getItem('roll') == 3) && <ErrorPage />}
+            {localStorage.getItem('roll') != 2 && <ErrorPage />}
         </>
     );
 }

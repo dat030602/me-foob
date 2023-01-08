@@ -185,14 +185,6 @@ function FollowOrder() {
                                             {data && keyIndex !== -1 && `${data[keyIndex].MaPhieuDatHang}`}
                                         </Text>
                                         <Text>
-                                            <strong>Chi nhánh: </strong>
-                                            {name && name[0].TenChiNhanh}
-                                        </Text>
-                                        <Text>
-                                            <strong>Địa chỉ chi nhánh: </strong>
-                                            {name && `${name[0].dccn}`}
-                                        </Text>
-                                        <Text>
                                             <strong>Tên khách hàng: </strong>
                                             {name && name[0].TenKhachHang}
                                         </Text>

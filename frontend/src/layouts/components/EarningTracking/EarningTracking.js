@@ -114,6 +114,7 @@ function EarningTracking() {
                                 </div>
                             </div>
                         )}
+                        {data !== undefined && data.length === 0 && <EmptyPage />}
                     </div>
 
                     <div className={cx('container', 'grid')} style={{ display: 'none' }} ref={refStatistical}>
@@ -145,10 +146,8 @@ function EarningTracking() {
                                 </div>
                             </div>
                         )}
+                        {data2 !== undefined && data2.length === 0 && <EmptyPage />}
                     </div>
-                    {((data !== undefined && data.length === 0) || (data2 !== undefined && data2.length === 0)) && (
-                        <EmptyPage />
-                    )}
                 </>
             )}
             {!(localStorage.getItem('roll') == 2) && <ErrorPage />}

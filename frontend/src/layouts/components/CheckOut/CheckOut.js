@@ -251,12 +251,16 @@ function CheckOut() {
                                     })}
                                 <div className={cx('row', 'sum')}>
                                     <Text className={cx('name')}>Tổng</Text>
-                                    <Text className={cx('name', 'price')}>{format(sumPriceProduct)}</Text>
+                                    <Text className={cx('name', 'price')}>{format(sumPriceProduct+priceDeliveryProduct)}</Text>
                                 </div>
                             </div>
                         </div>
                         <div className={cx('btn-submit')}>
-                            <Button className={cx('btn')} onClick={OrderIntoDB}>
+                            <Button className={cx('btn')} onClick={()=>{
+                                OrderIntoDB()
+                                alert("Thành công")
+                                window.open("/",'_self')
+                            }}>
                                 Đặt hàng
                             </Button>
                         </div>

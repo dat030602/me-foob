@@ -31,14 +31,14 @@ function Item({ children, data = {}, order = false }) {
     // }
     const [amount, setAmount] = useState(0);
     const [product, setProduct] = useState({ ma: '', ten: '', gia: 0, sl: 0 });
-    const countriesDropDown = document.getElementById("countriesDropDown");
+    const countriesDropDown = document.getElementById('countriesDropDown');
     function format(n) {
         return n.toFixed(0).replace(/./g, function (c, i, a) {
             return i > 0 && c !== '.' && (a.length - i) % 3 === 0 ? '.' + c : c;
         });
     }
     const handleOnClickAdd = () => {
-        console.log(data.TinhTrangMon)
+        console.log(data.TinhTrangMon);
         if (data.TinhTrangMon === 'Bình thường') {
             setAmount(amount + 1);
             if (product.sl === 0) setProduct({ ma: data.MaMonAn, ten: data.TenMonAn, gia: data.Gia, sl: amount + 1 });
@@ -100,14 +100,16 @@ function Item({ children, data = {}, order = false }) {
                         <div className={cx('group-row')}>
                             <Text>{data && data.Gia}</Text>
                             {amount > 0 && <Text>Số lượng: {amount}</Text>}
-                            <div className={cx('btn')}>
-                                <Button className={cx('sub')} onClick={handleOnClickSub}>
-                                    asd
-                                </Button>
-                                <Button className={cx('add')} onClick={handleOnClickAdd}>
-                                    asd
-                                </Button>
-                            </div>
+                            {data.TinhTrangMon === 'Bình thường' && (
+                                <div className={cx('btn')}>
+                                    <Button className={cx('sub')} onClick={handleOnClickSub}>
+                                        asd
+                                    </Button>
+                                    <Button className={cx('add')} onClick={handleOnClickAdd}>
+                                        asd
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

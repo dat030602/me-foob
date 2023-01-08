@@ -11,9 +11,8 @@ class FollowOrderController {
 						.request()
 						.query(
 							`select DH.MaPhieuDatHang, DH.TongHoaDon, DH.TinhTrangDonHang
-							from PHIEUDATHANG DH join CHINHANH CN on CN.MaChiNhanh=DH.MaChiNhanh
-											join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
-							where KH.MaKhachHang='${req.params.slug}'`
+							from PHIEUDATHANG DH
+							where MaKhachHang='${req.params.slug}'`
 						)
 						.then((v) => {
 							result = v;
@@ -39,15 +38,12 @@ class FollowOrderController {
 					conn
 						.request()
 						.query(
-							`select distinct(KH.TenKhachHang), CN.TenChiNhanh,
-								DC1.Xa + ', '+ DC1.Huyen + ', ' + DC1.ThanhPho as dcgh,
-								DC2.Xa + ', '+ DC2.Huyen + ', ' + DC2.ThanhPho as dccn
-							from CHITIETPHIEUDATHANG CTDH
-								join PHIEUDATHANG DH on DH.MaPhieuDatHang=CTDH.MaPhieuDatHang
-								join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
-								join CHINHANH CN on CN.MaChiNhanh=DH.MaChiNhanh
-								join DIACHI DC1 on DH.DiaChiGH=DC1.MaDiaChi --Địa chỉ giao hàng
-								join DIACHI DC2 on CN.MaDiaChi=DC2.MaDiaChi --Địa chỉ chi nhánh
+							`select distinct(KH.TenKhachHang),
+							DC1.Xa + ', '+ DC1.Huyen + ', ' + DC1.ThanhPho as dcgh
+						from CHITIETPHIEUDATHANG CTDH
+							join PHIEUDATHANG DH on DH.MaPhieuDatHang=CTDH.MaPhieuDatHang
+							join KHACHHANG KH on KH.MaKhachHang=DH.MaKhachHang
+							join DIACHI DC1 on DH.DiaChiGH=DC1.MaDiaChi --Địa chỉ giao hàng
 							where CTDH.MaPhieuDatHang='${req.body.pdh}'`
 						)
 						.then((v) => {
