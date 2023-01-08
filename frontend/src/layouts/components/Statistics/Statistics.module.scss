@@ -37,13 +37,13 @@ table,
 th,
 td {
     text-align: center;
-    border-right: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border: 1.5px solid #ccc;
-    // background-color: #6AF2F0;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    border: 1.5px solid white;
+    background-color: #6AF2F0;
 }
 th {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid white;
 }
 td.submit,
 td.more {
